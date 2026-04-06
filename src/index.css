@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-surface: #F8F8F8;
+    --bg-elevated: #F0F0F0;
+    --accent: #FF5733;
+    --accent-hover: #E04520;
+    --accent-muted: rgba(255, 87, 51, 0.10);
+    --accent-gradient: linear-gradient(135deg, #FF5733 0%, #FF3A1A 100%);
+    --text-primary: #0D0D0D;
+    --text-muted: #666666;
+    --text-dim: #9A9A9A;
+    --border: #E5E5E5;
+    --border-strong: #D0D0D0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --success: #22c55e;
+    --success-muted: rgba(34, 197, 94, 0.10);
+    --error: #ef4444;
+    --error-muted: rgba(239, 68, 68, 0.10);
+    --warning: #f59e0b;
+    --warning-muted: rgba(245, 158, 11, 0.10);
+    --info: #3b82f6;
+    --info-muted: rgba(59, 130, 246, 0.10);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01', 'cv01';
+  }
+
+  /* Headings — Syne, tight tracking, strong weight */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+  }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.015em; }
+  h4 { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.01em; }
+
+  /* Numbers that should be tabular */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Syne utility — applied to tab labels, stat values, section chips */
+  .font-syne {
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  button, input, textarea, select {
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+
+@layer components {
+  /* ─── Buttons ─── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm text-white font-medium transition-all duration-150;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent-gradient);
+    box-shadow: 0 2px 8px rgba(255, 87, 51, 0.28);
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #E04520 0%, #CC2E0A 100%);
+    box-shadow: 0 4px 14px rgba(255, 87, 51, 0.38);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    letter-spacing: 0.01em;
+  }
+  .btn-secondary:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    @apply rounded-xl p-5;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .card-surface {
+    @apply rounded-xl p-5;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+  }
+
+  /* ─── Form ─── */
+  .input {
+    @apply w-full rounded-lg px-3.5 py-2.5 text-sm outline-none transition-all duration-150;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-muted);
+  }
+  .input::placeholder { color: var(--text-dim); }
+  .input[readonly] {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+
+  .label {
+    @apply block text-sm font-medium mb-1.5;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    letter-spacing: 0.005em;
+  }
+
+  /* ─── Status badges ─── */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.01em;
+  }
+  .badge-pending  { background: var(--warning-muted);  color: var(--warning); }
+  .badge-sent     { background: var(--info-muted);     color: var(--info); }
+  .badge-failed   { background: var(--error-muted);    color: var(--error); }
+  .badge-opened   { background: var(--success-muted);  color: var(--success); }
+  .badge-replied  { background: var(--accent-muted);   color: var(--accent); }
+
+  /* ─── Toast ─── */
+  .toast {
+    @apply fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium z-50;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .toast-success {
+    background: #fff;
+    border: 1px solid var(--success);
+    color: var(--success);
+  }
+  .toast-error {
+    background: #fff;
+    border: 1px solid var(--error);
+    color: var(--error);
+  }
+
+  /* ─── Live pulse ─── */
+  .pulse-dot {
+    @apply w-2 h-2 rounded-full flex-shrink-0;
+    background: var(--success);
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+}
+
+/* ─── Keyframes ─── */
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* ─── Progress ring ─── */
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* ─── Table ─── */
+.table-header-cell {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
