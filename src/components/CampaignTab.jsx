@@ -1,6 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { usePolling } from '../hooks/usePolling'
 import { getStats, startCampaign, pauseCampaign, sendNow, stopSending } from '../api/n8n'
+
+const SENDING_KEY = 'js_sending_active'
 
 const INITIAL_STATS = { total: 0, sent: 0, pending: 0, failed: 0, opened: 0, replied: 0 }
 const INTERVALS = [
@@ -65,11 +67,15 @@ const ProgressRing = ({ sent, total }) => {
 export default function CampaignTab({ showToast }) {
   const [stats, setStats] = useState(INITIAL_STATS)
   const [campaignActive, setCampaignActive] = useState(false)
-  const [sending, setSending] = useState(false)
+  const [sending, setSending] = useState(() => localStorage.getItem(SENDING_KEY) === 'true')
   const [loading, setLoading] = useState(false)
   const [sendNowLoading, setSendNowLoading] = useState(false)
   const [interval, setInterval] = useState(1)
   const [lastUpdated, setLastUpdated] = useState(null)
+
+  useEffect(() => {
+    localStorage.setItem(SENDING_KEY, sending ? 'true' : 'false')
+  }, [sending])
 
   const fetchStats = useCallback(async () => {
     try {
@@ -77,6 +83,10 @@ export default function CampaignTab({ showToast }) {
       setStats(data)
       if (typeof data.campaignActive === 'boolean') {
         setCampaignActive(data.campaignActive)
+      }
+      // Auto-clear sending state when no contacts are pending
+      if (data.pending === 0) {
+        setSending(false)
       }
       setLastUpdated(new Date())
     } catch { /* silent */ }
